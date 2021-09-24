@@ -54,17 +54,24 @@
         event.preventDefault();
         const clickedElement = this;
 
-        //add class favorite 
-        clickedElement.classList.add('favorite');
 
-        // extract id from element
-        const bookId = clickedElement.getAttribute('data-id');
+        if(clickedElement !== clickedElement.classList.contains('favorite')) {
 
-        // add id faviriteBooks
-        favoriteBooks.push(bookId);
+          //add class favorite 
+          clickedElement.classList.add('favorite');
+
+          // extract id from element
+          const bookId = clickedElement.getAttribute('data-id');
+
+          // add id faviriteBooks
+          favoriteBooks.push(bookId);
+        } else {
+          clickedElement.classList.remove('favorite');
+          favoriteBooks.splice(favoriteBooks.indexOf(bookId), 1);
+
         console.log('favoriteBooks:', favoriteBooks);
-      });
-    }
+      };
+  
   }
 
 
