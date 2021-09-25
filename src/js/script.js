@@ -16,6 +16,7 @@
     bookTemplate: Handlebars.compile(document.querySelector(select.templateOf.bookTemplate).innerHTML),
   };
 
+
   // List of book rendering
   function render(){
 
@@ -36,39 +37,40 @@
 
   // Favorites
   // pusta tablica favoriteBooks
-
   const favoriteBooks = [];
 
   function initActions(){
 
-    // reference to .book__image in .booksList
-    const booksImage = document.querySelectorAll(select.containerOf.booksImage);
+    const booksImages = document.querySelectorAll('.book__image');
+   
+    for (let image of booksImages) {
+      
+      // eventListener
+      image.addEventListener('dblclick', function (event) {
 
-    // loop start
-    for(const image of booksImage){
-
-      // addEventListeners - dbl
-      image.addEventListener('dblclick', function(event){
-  
-        // preventDefault
         event.preventDefault();
-        const clickedElement = this;
 
-        if(!image.classList.contains('favorite')) {
-  
-          //add class favorite 
-          clickedElement.classList.add('favorite');
-  
-          // extract id from element
-          const bookId = clickedElement.getAttribute('data-id');
-  
-          // add id favoriteBooks
-          favoriteBooks.push(bookId);
-          console.log('favoriteBooks:', favoriteBooks);
-        } else {
+        //event.target
+        const favoriteBookAtribute = event.target.offsetParent.getAttribute('data-id');
 
-          clickedElement.classList.remove('favorite');
-          favoriteBooks.splice(favoriteBooks.indexOf(image), 1);
+        if (event.target.offsetParent.classList.contains('book__image')) {
+
+          if(!image.classList.contains('favorite')) {
+
+            favoriteBooks.push(favoriteBookAtribute);
+            
+            event.target.offsetParent.classList.add('favorite');
+
+            console.log('favoriteBooks', favoriteBooks);
+            
+          } else {
+
+            favoriteBooks.splice(favoriteBooks.indexOf(image), 1);
+           
+            event.target.offsetParent.classList.remove('favorite');
+           
+            console.log('favoriteBooks', favoriteBooks);
+          }
         }
       });
     }
