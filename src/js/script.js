@@ -49,38 +49,30 @@
 
       // addEventListeners - dbl
       image.addEventListener('dblclick', function(event){
-
+  
         // preventDefault
         event.preventDefault();
         const clickedElement = this;
 
-
-        if(clickedElement !== clickedElement.classList.contains('favorite')) {
-
+        if(!image.classList.contains('favorite')) {
+  
           //add class favorite 
           clickedElement.classList.add('favorite');
-
+  
           // extract id from element
           const bookId = clickedElement.getAttribute('data-id');
-
-          // add id faviriteBooks
-          favoriteBooks.push(bookId);
-        } else {
-          clickedElement.classList.remove('favorite');
-          favoriteBooks.splice(favoriteBooks.indexOf(bookId), 1);
-
-        console.log('favoriteBooks:', favoriteBooks);
-      };
   
+          // add id favoriteBooks
+          favoriteBooks.push(bookId);
+          console.log('favoriteBooks:', favoriteBooks);
+        } else {
+
+          clickedElement.classList.remove('favorite');
+          favoriteBooks.splice(favoriteBooks.indexOf(image), 1);
+        }
+      });
+    }
   }
-
-
-
-
-
-
-
-
 
 
   render();
