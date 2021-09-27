@@ -1,7 +1,6 @@
-/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
-('use strict');
-
 {
+  'use strict';
+
   const select = {
     templateOf: {
       bookTemplate: '#template-book',
@@ -9,21 +8,21 @@
     containerOf: {
       booksList: '.books-list',
       booksImage: '.books-list .book__image',
+      booksFilters: '.filters',
     },
 
-    filtersOf: {
-      booksFilters: '.filters',
-    }
-
+    forms: {
+      form: '.filters form',
+    },
   };
   const templates = {
     bookTemplate: Handlebars.compile(document.querySelector(select.templateOf.bookTemplate).innerHTML),
   };
 
-
-  // List of book rendering
+  const filters = [];
+  const favoriteBooks = [];
+  
   function render(){
-
     /* find menu container */
     const bookListContainer = document.querySelector(select.containerOf.booksList);
       
@@ -39,12 +38,7 @@
     }
   }
 
-  // Favorites
-  // empty array favoriteBooks
-  const favoriteBooks = [];
-
   function initActions(){
-
     const booksImages = document.querySelectorAll('.book__image');
    
     for (let image of booksImages) {
@@ -80,13 +74,10 @@
     }
 
     // filters part
-
-    const filters = [];
-
-    const booksForm = document.querySelector('.filters');
+    const booksForm = document.querySelector('.filters form');
     
     booksForm.addEventListener('click', function(event) {
-
+      
       const clickedElement = event.target;
      
       if(clickedElement.tagName === 'INPUT' && clickedElement.type === 'checkbox' && clickedElement.name === 'filter') {
@@ -96,21 +87,40 @@
         if(clickedElement.checked) {
 
           filters.push(clickedElement.value);
-
+        
         } else {
 
           filters.splice(filters.indexOf(clickedElement.value), 1);
-          
+      
         }
-
         console.log('filters', filters);
       }
+      filterBooks();
     });
   }
 
+  function filterBooks (){
+    for(const eachBook of dataSource.books) {
 
+      let shouldBeHidden = false;
+      const bookToBeHidden = document.querySelector('.book__image[data-id="' + eachBook.id + '"]');
+      
+      for(const filter of filters) {
+        if(!eachBook.details[filter]) {
+          shouldBeHidden = true;
+          break;
+        } 
+      }
+      
+      if(shouldBeHidden){
+        bookToBeHidden.classList.add('hidden');
+      } else {
+        bookToBeHidden.classList.remove('hidden');
+      }
+    }
+  }
 
-
+  
   render();
   initActions();
 }
