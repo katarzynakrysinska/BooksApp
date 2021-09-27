@@ -42,32 +42,21 @@
     const booksImages = document.querySelectorAll('.book__image');
    
     for (let image of booksImages) {
-      
       // eventListener
       image.addEventListener('dblclick', function (event) {
-
         event.preventDefault();
         
         //event.target
         const favoriteBookAtribute = event.target.offsetParent.getAttribute('data-id');
 
         if (event.target.offsetParent.classList.contains('book__image')) {
-
           if(!image.classList.contains('favorite')) {
-
             favoriteBooks.push(favoriteBookAtribute);
-            
             event.target.offsetParent.classList.add('favorite');
-
-            console.log('favoriteBooks', favoriteBooks);
-            
+    
           } else {
-
             favoriteBooks.splice(favoriteBooks.indexOf(image), 1);
-           
             event.target.offsetParent.classList.remove('favorite');
-           
-            console.log('favoriteBooks', favoriteBooks);
           }
         }
       });
@@ -75,23 +64,17 @@
 
     // filters part
     const booksForm = document.querySelector('.filters form');
-    
     booksForm.addEventListener('click', function(event) {
-      
       const clickedElement = event.target;
      
       if(clickedElement.tagName === 'INPUT' && clickedElement.type === 'checkbox' && clickedElement.name === 'filter') {
-        
         console.log('clickedElement.value', clickedElement.value);
         
         if(clickedElement.checked) {
-
           filters.push(clickedElement.value);
         
         } else {
-
           filters.splice(filters.indexOf(clickedElement.value), 1);
-      
         }
         console.log('filters', filters);
       }
