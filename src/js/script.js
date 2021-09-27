@@ -26,9 +26,13 @@
     /* find menu container */
     const bookListContainer = document.querySelector(select.containerOf.booksList);
       
-    for(const eachBook of dataSource.books){
-    /* generate HTML based on template */
+    for(const eachBook of dataSource.books) {
+
+      eachBook.ratingBgc = determineRatingBgc(eachBook.rating);
+      eachBook.ratingWidth = eachBook.rating * 10;
+      /* generate HTML based on template */
       const generatedHTML = templates.bookTemplate(eachBook);
+      
       
       /* create element using utils.createElementFromHTML */
       const element = utils.createDOMFromHTML(generatedHTML);
@@ -103,8 +107,28 @@
     }
   }
 
+  function determineRatingBgc(rating) {
+    let background = '';
+    if(rating < 6) {
+      background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+    }
+    if(rating > 6 && rating <= 8) {
+      background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+    }
+    if(rating > 8 && rating <= 9) {
+      background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+    }
+    if(rating > 9) {
+      background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+    }
+
+    return background;
+  }
+
   
   render();
+  determineRatingBgc();
   initActions();
+  
 }
 
